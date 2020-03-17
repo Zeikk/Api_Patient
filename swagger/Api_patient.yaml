@@ -1,0 +1,140 @@
+---
+swagger: "2.0"
+info:
+  description: "Api permettant de récupérer les informations des patients 
+  lorsqu'un médecin est connecté"
+  version: "1.0.0"
+  title: "API Réception Patient"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "patient"
+  description: "Récupération des informations des patients"
+- name: "user"
+  description: "Actions sur l'utilsateur"
+schemes:
+- "https"
+- "http"
+paths:
+  /patients:
+    get:
+      tags:
+      - "patient"
+      summary: "Récupére la liste de tous les patients du médecin"
+      description: ""
+      operationId: "getPatients"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Patient"
+        "405":
+          description: "Mauvaise saisei"
+  /patients/{patientId}:
+    get:
+      tags:
+      - "patient"
+      summary: "Trouve un patient d'après son identifiant (numéro de sécurité sociale)"
+      description: "Retourne un patient"
+      operationId: "getPatientById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "patientId"
+        in: "path"
+        description: "ID du patient"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "PatientId"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Patient"
+        "400":
+          description: "Identifiant invalie"
+        "404":
+          description: "Patient non trouvé"
+          
+  /user/login:
+    get:
+      tags:
+      - "user"
+      summary: "Identifie un médecin au  système"
+      description: ""
+      operationId: "loginMedecin"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "L'identifiant du médecin"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Id"
+      - name: "password"
+        in: "query"
+        description: "Le mot de passe du médecin"
+        required: true
+        type: "string"
+        x-exportParamName: "Password"
+      responses:
+        "200":
+          description: "successful operation"
+          headers:
+            X-Rate-Limit:
+              type: "integer"
+              format: "int32"
+              description: "calls per hour allowed by the user"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+          schema:
+            type: "string"
+        "400":
+          description: "Identifiant / Mot de passe invalides"
+  /user/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Déconnecte le médecin"
+      description: ""
+      operationId: "logoutMedecin"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "Successful operation"
+definitions:
+  Patient:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nom:
+        type: "string"
+      prenom:
+        type: "string"
+      password:
+        type: "string"
+      dateDeNaissance:
+        type: "string"
+      sexe:
+        type: "string"
+        enum:
+        - "Homme"
+        - "Femme"
+        - "Autre"
+  
