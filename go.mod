@@ -1,4 +1,4 @@
-module api_patient
+module github.com/Zeikk/API_Go
 
 go 1.14
 

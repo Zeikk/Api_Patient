@@ -1,7 +1,7 @@
 package control
 
 import(
-	"fmt"
+	"net/http"
 )
 
 func LoginMedecin(w http.ResponseWriter, r *http.Request) {

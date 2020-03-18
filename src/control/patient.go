@@ -1,6 +1,8 @@
 package control
 
 import(
+	"github.com/gorilla/mux"
+	"net/http"
 	"fmt"
 )
 
@@ -15,4 +17,6 @@ func GetPatientById(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	title := vars["title"]
+
+	fmt.Println(title)
 }

@@ -5,7 +5,7 @@ import (
 	"log"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/Zeikk/Api_Patient/router"
+	"./router"
 )
 
 func main() {
