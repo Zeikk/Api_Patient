@@ -57,7 +57,7 @@ func GetPatients(w http.ResponseWriter, r *http.Request) {
 	idMedecin := getId(w, r)
 	db := db.OpenDB()
 
-	rows, err := db.Query("select prenomPersonne, nomPersonne, sexePersonne, dateDeNaissance from personne join etre_patient using(idPersonne) join suivre using(idPatient) where idMedecin = ?", idMedecin)
+	rows, err := db.Query("select prenomPersonne, nomPersonne, sexePersonne, dateDeNaissance from personne join patient using(idPersonne) join suivre using(idPatient) where idMedecin = ?", idMedecin)
 
 	defer rows.Close()
 
@@ -90,7 +90,7 @@ func GetPatientById(w http.ResponseWriter, r *http.Request) {
 		
 	db := db.OpenDB()
 
-	rows, err := db.Query("select prenomPersonne, nomPersonne, sexePersonne, dateDeNaissance from personne join etre_patient using(idPersonne) join suivre using(idPatient) where idPatient = ? and idMedecin = ?", idPatient, idMedecin)
+	rows, err := db.Query("select prenomPersonne, nomPersonne, sexePersonne, dateDeNaissance from personne join patient using(idPersonne) join suivre using(idPatient) where idPatient = ? and idMedecin = ?", idPatient, idMedecin)
 
 	defer rows.Close()
 

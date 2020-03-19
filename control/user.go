@@ -31,7 +31,7 @@ func LoginMedecin(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	database := db.OpenDB()
-	rows, err := database.Query("select passwordMedecin, idMedecin from medecin join etre_medecin using(idMedecin) where idPersonne = ?", medecin.IdPersonne)
+	rows, err := database.Query("select passwordMedecin, idMedecin from medecin where idPersonne = ?", medecin.IdPersonne)
 
 	var password, id string
 	defer rows.Close()
