@@ -35,7 +35,7 @@ paths:
             items:
               $ref: "#/definitions/Patient"
         "405":
-          description: "Mauvaise saisei"
+          description: "Nécessite Authentification"
   /patients/{patientId}:
     get:
       tags:
@@ -59,8 +59,6 @@ paths:
           description: "Successful operation"
           schema:
             $ref: "#/definitions/Patient"
-        "400":
-          description: "Identifiant invalie"
         "404":
           description: "Patient non trouvé"
           
