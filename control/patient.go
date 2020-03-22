@@ -100,6 +100,7 @@ func GetPatientById(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		err := rows.Scan(&prenom, &nom, &sexe, &date)
 		if err != nil {
+			log.Println("erreur row 1")
 			log.Fatal(err)
 		}
 		fmt.Fprintf(w, "\nNom: %s", nom)
@@ -111,31 +112,36 @@ func GetPatientById(w http.ResponseWriter, r *http.Request) {
 		for rowsMaladie.Next() {
 			errMal := rowsMaladie.Scan(&maladie)
 			if err != nil {
+				log.Println("erreur mal 1")
 				log.Fatal(errMal)
 			}
 			fmt.Fprintf(w, "\nMaladie: %s", maladie)
 		}
 		errMal = rowsMaladie.Err()
 		if errMal != nil {
+			log.Println("erreur mal 1")
 			log.Fatal(errMal)
 		}
 
 		fmt.Fprintf(w, "\nHistorique des médicaments:")
 		rowsMedicaments, errMedic := db.Query("select libelleMedicament from medicament join prescrire using(idMedicament) where idPatient = ?", idPatient)
 		for rowsMedicaments.Next() {
-			errMedic := rowsMaladie.Scan(&medicament)
+			errMedic := rowsMedicaments.Scan(&medicament)
 			if errMedic != nil {
+				log.Println("erreur medic 1")
 				log.Fatal(errMedic)
 			}
 			fmt.Fprintf(w, "\nMédicament: %s", medicament)
 		}
 		errMedic = rowsMedicaments.Err()
 		if errMedic != nil {
+			log.Println("erreur medic 2")
 			log.Fatal(errMedic)
 		}
 	}
 	err = rows.Err()
 	if err != nil {
+		log.Println("erreur rows 2")
 		log.Fatal(err)
 	}
 
